@@ -32,12 +32,22 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
 
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
   function createBoard() {
-    
+    let initialBoard = [];
+    for (let i = 0; i < nrows; i++) {
+      let row =[];
+      for (let j = 0; j < ncols; j++) {
+        let num = Math.random();
+        if (num < chanceLightStartsOn) row.push(true);
+        else row.push(false);
+      }
+      initialBoard.push(row);
+    }
     // TODO: create array-of-arrays of true/false values
     return initialBoard;
   }
 
   function hasWon() {
+    return board.every(cell => cell === false);
     // TODO: check the board in state to determine whether the player has won.
   }
 
@@ -51,8 +61,12 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
         if (x >= 0 && x < ncols && y >= 0 && y < nrows) {
           boardCopy[y][x] = !boardCopy[y][x];
         }
+        return boardCopy
       };
 
+      let newBoard = [...oldBoard];
+
+      return flipCell(y, x, newBoard);
       // TODO: Make a (deep) copy of the oldBoard
 
       // TODO: in the copy, flip this cell and the cells around it
@@ -60,6 +74,21 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
       // TODO: return the copy
     });
   }
+  console.log(board)
+  return (
+    <table>
+      <tbody>
+        {board.map(row => (
+            <tr>{row.map(boolean => (
+              <Cell flipCellsAroundMe={flipCellsAround} isLit={boolean} />
+              )
+            )}</tr>
+          )
+        )
+      }       
+        </tbody>
+    </table>
+  )
 
   // if the game is won, just show a winning msg & render nothing else
 
