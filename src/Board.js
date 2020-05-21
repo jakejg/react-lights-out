@@ -27,7 +27,7 @@ import "./Board.css";
  *
  **/
 
-function Board({ nrows, ncols, chanceLightStartsOn }) {
+function Board({ nrows=4, ncols=4, chanceLightStartsOn=.5 }) {
   const [board, setBoard] = useState(createBoard());
 
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
@@ -42,13 +42,11 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
       }
       initialBoard.push(row);
     }
-    // TODO: create array-of-arrays of true/false values
     return initialBoard;
   }
 
   function hasWon() {
     return board.every(row=> row.every(cell => cell === false))
-    // TODO: check the board in state to determine whether the player has won.
   }
 
   function flipCellsAround(coord) {
@@ -70,19 +68,12 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
       flipCell(y+1, x, newBoard);
       flipCell(y, x-1, newBoard);
       flipCell(y, x+1, newBoard);
-      
-      // TODO: Make a (deep) copy of the oldBoard
+    
       return newBoard
-      // TODO: in the copy, flip this cell and the cells around it
-
-      // TODO: return the copy
     });
   }
-  
-  console.log(board);
 
   if (hasWon()) return <h1>You won!</h1>;
-  console.log(hasWon())
 
   return (
     <table>
@@ -99,13 +90,6 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
     </table>
   )
 
-  // if the game is won, just show a winning msg & render nothing else
-
-  // TODO
-
-  // make table board
-
-  // TODO
 }
 
 export default Board;
