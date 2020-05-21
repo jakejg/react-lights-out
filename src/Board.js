@@ -47,7 +47,7 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   }
 
   function hasWon() {
-    return board.every(cell => cell === false);
+    return board.every(row=> row.every(cell => cell === false))
     // TODO: check the board in state to determine whether the player has won.
   }
 
@@ -65,16 +65,25 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
       };
 
       let newBoard = [...oldBoard];
-
-      return flipCell(y, x, newBoard);
+      flipCell(y, x, newBoard);
+      flipCell(y-1, x, newBoard);
+      flipCell(y+1, x, newBoard);
+      flipCell(y, x-1, newBoard);
+      flipCell(y, x+1, newBoard);
+      
       // TODO: Make a (deep) copy of the oldBoard
-
+      return newBoard
       // TODO: in the copy, flip this cell and the cells around it
 
       // TODO: return the copy
     });
   }
-  console.log(board)
+  
+  console.log(board);
+
+  if (hasWon()) return <h1>You won!</h1>;
+  console.log(hasWon())
+
   return (
     <table>
       <tbody>
