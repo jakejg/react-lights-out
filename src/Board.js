@@ -78,9 +78,9 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   return (
     <table>
       <tbody>
-        {board.map(row => (
-            <tr>{row.map(boolean => (
-              <Cell flipCellsAroundMe={flipCellsAround} isLit={boolean} />
+        {board.map((row, x) => (
+            <tr>{row.map((boolean, y) => (
+              <Cell flipCellsAroundMe={() => flipCellsAround(`${x}-${y}`)} isLit={boolean} />
               )
             )}</tr>
           )
