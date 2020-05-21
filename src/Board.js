@@ -63,6 +63,7 @@ function Board({ nrows=4, ncols=4, chanceLightStartsOn=.5 }) {
       };
 
       let newBoard = [...oldBoard];
+
       flipCell(y, x, newBoard);
       flipCell(y-1, x, newBoard);
       flipCell(y+1, x, newBoard);
@@ -75,18 +76,19 @@ function Board({ nrows=4, ncols=4, chanceLightStartsOn=.5 }) {
 
   if (hasWon()) return <h1>You won!</h1>;
 
+
+  const tblBoard = board.map((row, x) => (
+    <tr key={x}>{row.map((boolean, y) => (
+      <Cell key={`${x}-${y}`} flipCellsAroundMe={() => flipCellsAround(`${x}-${y}`)} isLit={boolean} />
+      )
+    )}</tr>
+  ))
+
   return (
     <table>
       <tbody>
-        {board.map((row, x) => (
-            <tr>{row.map((boolean, y) => (
-              <Cell flipCellsAroundMe={() => flipCellsAround(`${x}-${y}`)} isLit={boolean} />
-              )
-            )}</tr>
-          )
-        )
-      }       
-        </tbody>
+        {tblBoard}       
+      </tbody>
     </table>
   )
 
